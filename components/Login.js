@@ -1,8 +1,15 @@
 import Head from "next/head";
 import { BsChatRightText } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-
+import { auth } from "../firebase/config.js";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 const Login = () => {
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle("", { prompt: "select_account" });
+  };
+
   return (
     <>
       <Head>
@@ -15,7 +22,10 @@ const Login = () => {
             <BsChatRightText className="w-24 h-24 text-white" />
           </div>
 
-          <button className="drop-shadow-md bg-white p-3 rounded-full flex items-center">
+          <button
+            onClick={handleGoogleLogin}
+            className="drop-shadow-md bg-white p-3 rounded-full flex items-center"
+          >
             <FcGoogle className="text-4xl mr-3" />
             Login with Google
           </button>
